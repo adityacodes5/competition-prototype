@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       vex.h                                                     */
+/*    Author:       Aditya Makhija                                            */
+/*    Created:      23 Oct 2023                                               */
+/*    Description:  Default header for V5 projects                            */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+//
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,6 +15,7 @@
 #include "v5.h"
 #include "v5_vcs.h"
 
+#include "robot-config.h"
 
 #define waitUntil(condition)                                                   \
   do {                                                                         \
