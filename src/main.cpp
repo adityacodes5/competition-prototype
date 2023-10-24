@@ -16,6 +16,11 @@ competition Competition;
 
 // define your global instances of motors and other devices here
 
+// define variable for remote controller enable/disable
+bool RemoteControlCodeEnabled = true;
+// define variables used for controlling motors based on controller inputs
+bool DrivingEnabled = true;
+
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
@@ -59,16 +64,52 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
+  //define variables used for controlling motors based on controller inputs
+  double leftSpeed = 0;
+  double rightSpeed = 0;
+
+  const double sensitivity = 120;
   // User control code here, inside the loop
+
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
-
-    // ........................................................................
+    int leftSpeed = (Controller1.Axis3.position(percent) + Controller1.Axis4.position(percent))*sensitivity;
+    int rightSpeed = (Controller1.Axis3.position(percent) - Controller1.Axis4.position(percent))*sensitivity;
+    // check if the values are inside of the deadband range
+    if (abs(leftSpeed) < 5 && abs(rightSpeed) < 5) {
+      // check if the motors have already been stopped
+      if (DrivingEnabled) {
+        // stop the drive motors
+        backL.stop();
+        backR.stop();
+        frontL.stop();
+        frontR.stop();
+        // tell the code that the motors have been stopped
+        DrivingEnabled = false;
+      }
+    } 
+    else {
+      // reset the toggle so that the deadband code knows to stop the motors next time the input is in the deadband range
+      DrivingEnabled = true;
+    }
+    
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
+          // only tell the left drive motor to spin if the values are not in the deadband range
+    if (DrivingEnabled) {
+      backL.spin(vex::forward, leftSpeed, voltageUnits::mV);
+      frontL.spin(vex::forward, leftSpeed, voltageUnits::mV);
+    }
+      // only tell the right drive motor to spin if the values are not in the deadband range
+    if (DrivingEnabled) {
+      backR.spin(vex::forward, rightSpeed, voltageUnits::mV);
+      frontR.spin(vex::forward, rightSpeed, voltageUnits::mV);
+    }
+    // ........................................................................
+
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

@@ -10,7 +10,6 @@ extern motor backL;
 extern motor backR;
 extern motor frontL;
 extern motor frontR;
-extern motor shooter;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
