@@ -6,12 +6,21 @@ extern brain Brain;
 extern drivetrain Drivetrain;
 extern controller Controller1;
 
+//drive 
 extern motor backL;
 extern motor backR;
 extern motor frontL;
 extern motor frontR;
+extern motor middleL;
+extern motor middleR;
 
+//shooter
 extern motor shooter;
+
+//flaps 
+extern motor flapL;
+extern motor flapR;
+
 extern limit limitSense;
 
 /**

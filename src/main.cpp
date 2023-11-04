@@ -82,10 +82,13 @@ void usercontrol(void) {
       // check if the motors have already been stopped
       if (DrivingEnabled) {
         // stop the drive motors
+        // if you need to add more motors add a var it to src>robot-config.cpp and include>robot-config.h
         backL.stop();
         backR.stop();
         frontL.stop();
         frontR.stop();
+        middleL.stop();
+        middleR.stop();
         // tell the code that the motors have been stopped
         DrivingEnabled = false;
       }
@@ -102,28 +105,46 @@ void usercontrol(void) {
     if (DrivingEnabled) {
       backL.spin(vex::forward, leftSpeed, voltageUnits::mV);
       frontL.spin(vex::forward, leftSpeed, voltageUnits::mV);
+      middleL.spin(vex::forward, leftSpeed, voltageUnits::mV);
     }
       // only tell the right drive motor to spin if the values are not in the deadband range
     if (DrivingEnabled) {
       backR.spin(vex::forward, rightSpeed, voltageUnits::mV);
       frontR.spin(vex::forward, rightSpeed, voltageUnits::mV);
+      middleR.spin(vex::forward, rightSpeed, voltageUnits::mV);
+
     }
     // ........................................................................
-    if(Controller1.ButtonL1.pressing() && !(limitSense.pressing())) { //if the button is pressed and the limit switch is not pressed
+    if(Controller1.ButtonL1.pressing() && !(limitSense.pressing())) //if the button is pressed and the limit switch is not pressed
+    {
       shooter.spin(vex::forward, 100, vex::percentUnits::pct); //charge the catapault up to shoot
     }
-    else if(Controller1.ButtonL2.pressing()) {
+    else if(Controller1.ButtonL2.pressing()) 
+    {
       shooter.stop(vex::brakeType::coast);
       shooter.spin(vex::reverse, 100, vex::percentUnits::pct); //charge the catapault up
     }
-    else if(Controller1.ButtonR1.pressing()){
+    else if(Controller1.ButtonR1.pressing())
+    {
       shooter.spin(vex::forward, 100, vex::percentUnits::pct); //hold down
       if(limitSense.pressing()) {
         shooter.stop(vex::brakeType::brake);
       }
     }
-    else {
+    else 
+    {
       shooter.stop(vex::brakeType::brake);
+    }
+
+    if(Controller1.ButtonX.pressing())
+    {
+      flapL.spin(vex::forward, 100, vex::percentUnits::pct);
+      flapR.spin(vex::forward, 100, vex::percentUnits::pct);
+    }
+    if(Controller1.ButtonY.pressing())
+    {
+      flapL.spin(vex::reverse, 100, vex::percentUnits::pct);
+      flapR.spin(vex::reverse, 100, vex::percentUnits::pct);
     }
 
     wait(20, msec); // Sleep the task for a short amount of time to
