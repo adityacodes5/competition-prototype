@@ -75,8 +75,8 @@ void usercontrol(void) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
-    int leftSpeed = (Controller1.Axis3.position(percent) + Controller1.Axis4.position(percent))*sensitivity;
-    int rightSpeed = (Controller1.Axis3.position(percent) - Controller1.Axis4.position(percent))*sensitivity;
+    leftSpeed = (Controller1.Axis3.position(percent) + Controller1.Axis4.position(percent))*sensitivity;
+    rightSpeed = (Controller1.Axis3.position(percent) - Controller1.Axis4.position(percent))*sensitivity;
     // check if the values are inside of the deadband range
     if (abs(leftSpeed) < 5 && abs(rightSpeed) < 5) {
       // check if the motors have already been stopped
@@ -98,7 +98,7 @@ void usercontrol(void) {
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
-          // only tell the left drive motor to spin if the values are not in the deadband range
+        // only tell the left drive motor to spin if the values are not in the deadband range
     if (DrivingEnabled) {
       backL.spin(vex::forward, leftSpeed, voltageUnits::mV);
       frontL.spin(vex::forward, leftSpeed, voltageUnits::mV);
@@ -109,7 +109,22 @@ void usercontrol(void) {
       frontR.spin(vex::forward, rightSpeed, voltageUnits::mV);
     }
     // ........................................................................
-
+    if(Controller1.ButtonL1.pressing() && !(limitSense.pressing())) { //if the button is pressed and the limit switch is not pressed
+      shooter.spin(vex::forward, 100, vex::percentUnits::pct); //charge the catapault up to shoot
+    }
+    else if(Controller1.ButtonL2.pressing()) {
+      shooter.stop(vex::brakeType::coast);
+      shooter.spin(vex::reverse, 100, vex::percentUnits::pct); //charge the catapault up
+    }
+    else if(Controller1.ButtonR1.pressing()){
+      shooter.spin(vex::forward, 100, vex::percentUnits::pct); //hold down
+      if(limitSense.pressing()) {
+        shooter.stop(vex::brakeType::brake);
+      }
+    }
+    else {
+      shooter.stop(vex::brakeType::brake);
+    }
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

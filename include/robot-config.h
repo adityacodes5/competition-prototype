@@ -11,6 +11,9 @@ extern motor backR;
 extern motor frontL;
 extern motor frontR;
 
+extern motor shooter;
+extern limit limitSense;
+
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
  * 
