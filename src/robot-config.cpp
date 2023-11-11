@@ -9,9 +9,11 @@ brain  Brain;
 
 // VEXcode device constructors/definitions
 motor backL = motor(PORT10, ratio18_1, bool(false)); // (port #, gear cartridge ratio, flipped?)
-motor frontL = motor(PORT8, ratio18_1, bool(false));
+motor middleL = motor(PORT8, ratio18_1, bool(false));
+motor frontL = motor(PORT16, ratio18_1, bool(false));
 motor backR = motor(PORT3, ratio18_1, bool(true));
-motor frontR = motor(PORT2, ratio18_1, bool(true));
+motor middleR = motor(PORT2, ratio18_1, bool(true));
+motor frontR = motor(PORT14, ratio18_1, bool(true));
 motor shooter = motor(PORT6, ratio6_1, bool(false));
 
 limit limitSense = limit(Brain.ThreeWirePort.A);

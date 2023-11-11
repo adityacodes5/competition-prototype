@@ -10,6 +10,8 @@ extern motor backL;
 extern motor backR;
 extern motor frontL;
 extern motor frontR;
+extern motor middleL;
+extern motor middleR;
 
 extern motor shooter;
 extern limit limitSense;

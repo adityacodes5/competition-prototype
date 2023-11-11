@@ -101,11 +101,13 @@ void usercontrol(void) {
         // only tell the left drive motor to spin if the values are not in the deadband range
     if (DrivingEnabled) {
       backL.spin(vex::forward, leftSpeed, voltageUnits::mV);
+      middleL.spin(vex::forward, leftSpeed, voltageUnits::mV);
       frontL.spin(vex::forward, leftSpeed, voltageUnits::mV);
     }
       // only tell the right drive motor to spin if the values are not in the deadband range
     if (DrivingEnabled) {
       backR.spin(vex::forward, rightSpeed, voltageUnits::mV);
+      middleL.spin(vex::forward, rightSpeed, voltageUnits::mV);
       frontR.spin(vex::forward, rightSpeed, voltageUnits::mV);
     }
     // ........................................................................
@@ -117,8 +119,11 @@ void usercontrol(void) {
       shooter.spin(vex::reverse, 100, vex::percentUnits::pct); //charge the catapault up
     }
     else if(Controller1.ButtonR1.pressing()){
-      shooter.spin(vex::forward, 100, vex::percentUnits::pct); //hold down
       if(limitSense.pressing()) {
+        shooter.stop(vex::brakeType::coast);
+        shooter.spin(vex::forward, 100, vex::percentUnits::pct);
+      }
+      else {
         shooter.stop(vex::brakeType::brake);
       }
     }
