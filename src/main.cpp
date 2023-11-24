@@ -21,6 +21,7 @@ bool RemoteControlCodeEnabled = true;
 // define variables used for controlling motors based on controller inputs
 bool DrivingEnabled = true;
 
+
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
@@ -33,6 +34,10 @@ bool DrivingEnabled = true;
 
 void pre_auton(void) {
 
+  InertialSensor.calibrate();
+  while (InertialSensor.isCalibrating()) {
+    this_thread::sleep_for(10);
+  }
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
 }
@@ -48,9 +53,54 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  // ..........................................................................
-  // Insert autonomous user code here.
-  // ..........................................................................
+  while (1){
+    if (limitSense.pressing()) {
+      shooter.stop(vex::brakeType::brake);
+      break;
+    }
+    shooter.spin(vex::forward, 100, vex::percentUnits::pct);
+  }
+  double autonSpeed = 50*120;
+  backR.spin(vex::forward, autonSpeed, voltageUnits::mV);
+  middleL.spin(vex::forward, autonSpeed, voltageUnits::mV);
+  frontR.spin(vex::forward, autonSpeed, voltageUnits::mV);
+
+  backL.spin(vex::forward, autonSpeed, voltageUnits::mV);
+  middleR.spin(vex::forward, autonSpeed, voltageUnits::mV);
+  frontL.spin(vex::forward, autonSpeed, voltageUnits::mV);
+  wait(1500, msec);
+
+  backL.stop(vex::brakeType::brake);
+  backR.stop(vex::brakeType::brake);
+  middleL.stop(vex::brakeType::brake);
+  middleR.stop(vex::brakeType::brake);
+  frontL.stop(vex::brakeType::brake);
+  frontR.stop(vex::brakeType::brake);
+
+  wait(1000, msec);
+
+  backR.spin(vex::reverse, autonSpeed, voltageUnits::mV);
+  middleL.spin(vex::reverse, autonSpeed, voltageUnits::mV);
+  frontR.spin(vex::reverse, autonSpeed, voltageUnits::mV);
+
+  backL.spin(vex::reverse, autonSpeed, voltageUnits::mV);
+  middleR.spin(vex::reverse, autonSpeed, voltageUnits::mV);
+  frontL.spin(vex::reverse, autonSpeed, voltageUnits::mV);
+  wait(1500, msec);
+
+  backL.stop(vex::brakeType::brake);
+  backR.stop(vex::brakeType::brake);
+  middleL.stop(vex::brakeType::brake);
+  middleR.stop(vex::brakeType::brake);
+  frontL.stop(vex::brakeType::brake);
+  frontR.stop(vex::brakeType::brake);
+  wait(1000, msec);
+  backL.stop(vex::brakeType::coast);
+  backR.stop(vex::brakeType::coast);
+  middleL.stop(vex::brakeType::coast);
+  middleR.stop(vex::brakeType::coast);
+  frontL.stop(vex::brakeType::coast);
+  frontR.stop(vex::brakeType::coast);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -67,18 +117,41 @@ void usercontrol(void) {
   //define variables used for controlling motors based on controller inputs
   double leftSpeed = 0;
   double rightSpeed = 0;
+  double tankSpeed = 0;
+  double gryoHeading = 0;
 
   const double sensitivity = 120;
   // User control code here, inside the loop
 
+  backL.stop(vex::brakeType::coast);
+  middleL.stop(vex::brakeType::coast);
+  frontL.stop(vex::brakeType::coast);
+
+  backR.stop(vex::brakeType::coast);
+  middleR.stop(vex::brakeType::coast);
+  frontR.stop(vex::brakeType::coast);
+
   while (1) {
+    backL.stop(vex::brakeType::coast);
+    middleL.stop(vex::brakeType::coast);
+    frontL.stop(vex::brakeType::coast);
+
+    backR.stop(vex::brakeType::coast);
+    middleR.stop(vex::brakeType::coast);
+    frontR.stop(vex::brakeType::coast);
+
+    double gyroHeading = InertialSensor.heading(rotationUnits::deg); //get robot's current heading in degrees
+
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
     leftSpeed = (Controller1.Axis3.position(percent) + Controller1.Axis4.position(percent))*sensitivity;
     rightSpeed = (Controller1.Axis3.position(percent) - Controller1.Axis4.position(percent))*sensitivity;
+    //arcade drive, left and right controller axises are added and subtracted from each other to get the left and right motor speeds
+    tankSpeed = (Controller1.Axis2.position(percent))*sensitivity;
+    //tank drive, only the right stick axis is used to control both motors, used only to go straight forward or backward
     // check if the values are inside of the deadband range
-    if (abs(leftSpeed) < 5 && abs(rightSpeed) < 5) {
+    if (abs(leftSpeed) < 5 && abs(rightSpeed) < 5 && abs(tankSpeed) < 5) {
       // check if the motors have already been stopped
       if (DrivingEnabled) {
         // stop the drive motors
@@ -95,18 +168,30 @@ void usercontrol(void) {
       DrivingEnabled = true;
     }
     
-    
+
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
         // only tell the left drive motor to spin if the values are not in the deadband range
+        //rightSpeed = maxValue(rightSpeed, tankSpeed);
+        //leftSpeed = maxValue(leftSpeed, tankSpeed);
+
     if (DrivingEnabled) {
+      backL.stop(vex::brakeType::coast);
+      middleL.stop(vex::brakeType::coast);
+      frontL.stop(vex::brakeType::coast);
+      
       backL.spin(vex::forward, leftSpeed, voltageUnits::mV);
       middleL.spin(vex::forward, leftSpeed, voltageUnits::mV);
       frontL.spin(vex::forward, leftSpeed, voltageUnits::mV);
+      
     }
       // only tell the right drive motor to spin if the values are not in the deadband range
     if (DrivingEnabled) {
+      backR.stop(vex::brakeType::coast);
+      middleR.stop(vex::brakeType::coast);
+      frontR.stop(vex::brakeType::coast);
+      
       backR.spin(vex::forward, rightSpeed, voltageUnits::mV);
       middleL.spin(vex::forward, rightSpeed, voltageUnits::mV);
       frontR.spin(vex::forward, rightSpeed, voltageUnits::mV);
@@ -120,7 +205,7 @@ void usercontrol(void) {
       shooter.spin(vex::reverse, 100, vex::percentUnits::pct); //charge the catapault up
     }
     else if(Controller1.ButtonR1.pressing()){
-      if(limitSense.pressing()) {
+      if(limitSense.pressing()) { //limit switch is high if catapault is fully charged, low if not
         shooter.stop(vex::brakeType::coast);
         shooter.spin(vex::forward, 100, vex::percentUnits::pct);
       }
@@ -130,6 +215,12 @@ void usercontrol(void) {
     }
     else {
       shooter.stop(vex::brakeType::brake);
+    }
+    if(Controller1.ButtonR2.pressing()) {
+      //wingR.spin(vex::forward, 100, vex::rotationUnits::deg);
+    }
+    else {
+      wingR.stop(vex::brakeType::brake);
     }
 
     wait(20, msec); // Sleep the task for a short amount of time to
