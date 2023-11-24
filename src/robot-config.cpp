@@ -14,7 +14,9 @@ motor frontL = motor(PORT16, ratio18_1, bool(true));
 motor backR = motor(PORT3, ratio18_1, bool(false));
 motor middleR = motor(PORT2, ratio18_1, bool(false));
 motor frontR = motor(PORT14, ratio18_1, bool(false));
+
 motor shooter = motor(PORT6, ratio6_1, bool(false));
+motor Flap = motor(PORT12, ratio18_1, bool(false));
 
 limit limitSense = limit(Brain.ThreeWirePort.A);
 //motor_group LeftDriveSmart = motor_group(leftMotorA, leftMotorB);

@@ -84,7 +84,7 @@ void usercontrol(void) {
       // check if the motors have already been stopped
       if (DrivingEnabled) 
       {
-        // stop the drive motors
+        // stop the drive motors 
         backL.stop();
         backR.stop();
         middleL.stop();
@@ -116,6 +116,8 @@ void usercontrol(void) {
       middleR.spin(vex::forward, rightSpeed, voltageUnits::mV);
       frontR.spin(vex::forward, rightSpeed, voltageUnits::mV);
     }
+
+    }
     // ........................................................................
     if(Controller1.ButtonL1.pressing()) //&& !(limitSense.pressing())
     {  //if the button is pressed and the limit switch is not pressed
@@ -137,6 +139,14 @@ void usercontrol(void) {
         shooter.stop(vex::brakeType::brake);
       }
     }
+    else if(Controller1.ButtonA.pressing())
+    {
+      Flap.spin(vex::forward, 100, vex::percentUnits::pct);
+    }
+    else if(Controller1.ButtonB.pressing())
+    {
+      Flap.spin(vex::reverse, 100, vex::percentUnits::pct);
+    }
     else 
     {
       shooter.stop(vex::brakeType::brake);
@@ -145,7 +155,6 @@ void usercontrol(void) {
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
-}
 
 
 //

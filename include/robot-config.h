@@ -13,6 +13,7 @@ extern motor frontR;
 extern motor middleL;
 extern motor middleR;
 
+extern motor Flap;
 extern motor shooter;
 extern limit limitSense;
 
