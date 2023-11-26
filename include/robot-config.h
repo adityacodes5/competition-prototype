@@ -15,6 +15,7 @@ extern motor middleR;
 
 extern motor shooter;
 extern motor wingR;
+extern motor wingL;
 extern limit limitSense;
 
 extern inertial InertialSensor;

@@ -97,6 +97,7 @@ void usercontrol(void) {
   double rightSpeed = 0;
   double tankSpeed = 0;
   double gryoHeading = 0;
+ 
 
 
 
@@ -106,9 +107,6 @@ void usercontrol(void) {
   brakeDrive(coast);
 
   while (1) {
-
-    brakeDrive(coast);
-    wingR.stop(vex::brakeType::brake);
 
     double gyroHeading = InertialSensor.heading(rotationUnits::deg); //get robot's current heading in degrees
 
@@ -151,7 +149,7 @@ void usercontrol(void) {
     // ........................................................................
     if(Controller1.ButtonL1.pressing() && !(limitSense.pressing())) { //if the button is pressed and the limit switch is not pressed
       shooter.spin(vex::forward, 100, vex::percentUnits::pct); //charge the catapault up to shoot
-    }
+      }
     else if(Controller1.ButtonL2.pressing()) {
       shooter.stop(vex::brakeType::coast);
       shooter.spin(vex::reverse, 100, vex::percentUnits::pct); //charge the catapault up
@@ -168,8 +166,28 @@ void usercontrol(void) {
     else {
       shooter.stop(vex::brakeType::brake);
     }
+
+    if(wingR.position(rotationUnits::deg) >= -90){
+      wingR.stop(vex::brakeType::brake);
+    }
+
+    if(wingL.position(rotationUnits::deg) >= -90){
+      wingR.stop(vex::brakeType::brake);
+    }
+
     if(Controller1.ButtonR2.pressing()) {
-      //wingR.spin(vex::forward, 100, vex::rotationUnits::deg);
+      if(wingR.position(rotationUnits::deg) <= 85 && wingL.position(rotationUnits::deg) <= 85){
+        wingR.spinFor(vex::reverse, -85, vex::rotationUnits::deg);
+        wingL.spinFor(vex::reverse, -85, vex::rotationUnits::deg);
+        wingL.stop(vex::brakeType::brake);
+        wingR.stop(vex::brakeType::brake);
+        Brain.Screen.print(wingR.position(rotationUnits::deg));
+      }
+
+        else {
+        wingR.spinFor(vex::reverse, 85, vex::rotationUnits::deg);
+        wingL.spinFor(vex::reverse, 85, vex::rotationUnits::deg);
+        }
     }
     else {
       wingR.stop(vex::brakeType::brake);
