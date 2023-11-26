@@ -13,9 +13,11 @@ extern motor frontR;
 extern motor middleL;
 extern motor middleR;
 
-extern motor Flap;
 extern motor shooter;
+extern motor wingR;
 extern limit limitSense;
+
+extern inertial InertialSensor;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
