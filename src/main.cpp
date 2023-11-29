@@ -170,15 +170,9 @@ void usercontrol(void) {
       shooter.stop(vex::brakeType::brake);
     }
 
-    if(flapR.position(rotationUnits::deg) >= -90){
-      flapR.stop(vex::brakeType::brake);
-    }
-
-    if(flapL.position(rotationUnits::deg) >= -90){
-      flapR.stop(vex::brakeType::brake);
-    }
-
-    if(Controller1.ButtonR2.pressing()) {
+// start of the flaps
+    if(Controller1.ButtonR2.pressing()) 
+    {
       if(flapR.position(rotationUnits::deg) <= 85 && flapL.position(rotationUnits::deg) <= 85){
         flapR.spinFor(vex::reverse, -85, vex::rotationUnits::deg);
         flapL.spinFor(vex::reverse, -85, vex::rotationUnits::deg);
@@ -192,9 +186,8 @@ void usercontrol(void) {
         flapL.spinFor(vex::reverse, 85, vex::rotationUnits::deg);
         }
     }
-    else {
-      flapR.stop(vex::brakeType::brake);
-    }
+
+
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
