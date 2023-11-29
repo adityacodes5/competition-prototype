@@ -114,8 +114,10 @@ void usercontrol(void) {
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
     leftSpeed = (Controller1.Axis3.position(percent) + Controller1.Axis4.position(percent))*sensitivity;
-    rightSpeed = (Controller1.Axis3.position(percent) - Controller1.Axis4.position(percent))*sensitivity; //arcade drive, left and right controller axises are added and subtracted from each other to get the left and right motor speeds
-    tankSpeed = (Controller1.Axis2.position(percent))*sensitivity; //tank drive, only the right stick axis is used to control both motors, used only to go straight forward or backward
+    rightSpeed = (Controller1.Axis3.position(percent) - Controller1.Axis4.position(percent))*sensitivity; 
+    //arcade drive, left and right controller axises are added and subtracted from each other to get the left and right motor speeds
+    tankSpeed = (Controller1.Axis2.position(percent))*sensitivity; 
+    //tank drive, only the right stick axis is used to control both motors, used only to go straight forward or backward
     // check if the values are inside of the deadband range
     if (abs(leftSpeed) < 5 && abs(rightSpeed) < 5 && abs(tankSpeed) < 5) {
       // check if the motors have already been stopped
@@ -136,7 +138,8 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
     rightSpeed = maxValue(rightSpeed, tankSpeed);
-    leftSpeed = maxValue(leftSpeed, tankSpeed); //chooses to use the tank drive speed if it is greater than the arcade drive speed (basically overrides one stick if the other is being used)
+    leftSpeed = maxValue(leftSpeed, tankSpeed); 
+    //chooses to use the tank drive speed if it is greater than the arcade drive speed (basically overrides one stick if the other is being used)
 
     if (DrivingEnabled) { //The code that drives the robot
       brakeDrive(coast);
@@ -167,30 +170,30 @@ void usercontrol(void) {
       shooter.stop(vex::brakeType::brake);
     }
 
-    if(wingR.position(rotationUnits::deg) >= -90){
-      wingR.stop(vex::brakeType::brake);
+    if(flapR.position(rotationUnits::deg) >= -90){
+      flapR.stop(vex::brakeType::brake);
     }
 
-    if(wingL.position(rotationUnits::deg) >= -90){
-      wingR.stop(vex::brakeType::brake);
+    if(flapL.position(rotationUnits::deg) >= -90){
+      flapR.stop(vex::brakeType::brake);
     }
 
     if(Controller1.ButtonR2.pressing()) {
-      if(wingR.position(rotationUnits::deg) <= 85 && wingL.position(rotationUnits::deg) <= 85){
-        wingR.spinFor(vex::reverse, -85, vex::rotationUnits::deg);
-        wingL.spinFor(vex::reverse, -85, vex::rotationUnits::deg);
-        wingL.stop(vex::brakeType::brake);
-        wingR.stop(vex::brakeType::brake);
-        Brain.Screen.print(wingR.position(rotationUnits::deg));
+      if(flapR.position(rotationUnits::deg) <= 85 && flapL.position(rotationUnits::deg) <= 85){
+        flapR.spinFor(vex::reverse, -85, vex::rotationUnits::deg);
+        flapL.spinFor(vex::reverse, -85, vex::rotationUnits::deg);
+        flapL.stop(vex::brakeType::brake);
+        flapR.stop(vex::brakeType::brake);
+        Brain.Screen.print(flapR.position(rotationUnits::deg));
       }
 
         else {
-        wingR.spinFor(vex::reverse, 85, vex::rotationUnits::deg);
-        wingL.spinFor(vex::reverse, 85, vex::rotationUnits::deg);
+        flapR.spinFor(vex::reverse, 85, vex::rotationUnits::deg);
+        flapL.spinFor(vex::reverse, 85, vex::rotationUnits::deg);
         }
     }
     else {
-      wingR.stop(vex::brakeType::brake);
+      flapR.stop(vex::brakeType::brake);
     }
 
     wait(20, msec); // Sleep the task for a short amount of time to

@@ -16,8 +16,8 @@ motor middleR = motor(PORT4, ratio18_1, bool(true));
 motor frontR = motor(PORT14, ratio18_1, bool(true));
 motor shooter = motor(PORT6, ratio6_1, bool(false));
 
-motor wingL = motor(PORT17, ratio18_1, bool(false));
-motor wingR = motor(PORT12, ratio18_1, bool(true));
+motor flapL = motor(PORT17, ratio18_1, bool(false));
+motor flapR = motor(PORT12, ratio18_1, bool(true));
 inertial InertialSensor = inertial(PORT20);
 
 limit limitSense = limit(Brain.ThreeWirePort.A);
