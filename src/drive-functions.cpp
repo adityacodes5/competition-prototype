@@ -35,7 +35,7 @@ void brakeDrive(brakeType driveBrake) //Declare brake type and stop drive motors
 
 int i = 0;
 
-int flaps() {
+int flapLe() {
     bool flapTriggered = false;  // Renamed to avoid conflicts
 
     while (!flapTriggered) {  // Introduce a condition to exit the loop
@@ -44,15 +44,36 @@ int flaps() {
         if (Controller1.ButtonR2.pressing()) {
             if (flapR.position(rotationUnits::deg) <= 124 && flapL.position(rotationUnits::deg) <= 124) {
                 vex::task failsafe1(failsafe);
-                flapR.spinFor(vex::reverse, -175, vex::rotationUnits::deg);
-                flapL.spinFor(vex::reverse, -175, vex::rotationUnits::deg);
+                flapL.spinFor(vex::reverse, -180, vex::rotationUnits::deg);
                 flapL.stop(vex::brakeType::brake);
+                //Brain.Screen.print("this");
+            } else {
+                vex::task failsafe1(failsafe);
+                flapL.spinFor(vex::reverse, 180, vex::rotationUnits::deg);
+
+            }
+        } else if (i == 1) {  // Use the equality operator ==
+            return 1;
+        }
+    }
+    return 0;  // Add a return statement at the end of the function
+}
+
+int flapRi() {
+    bool flapTriggered = false;  // Renamed to avoid conflicts
+
+    while (!flapTriggered) {  // Introduce a condition to exit the loop
+        //Brain.Screen.print("e");
+
+        if (Controller1.ButtonR2.pressing()) {
+            if (flapR.position(rotationUnits::deg) <= 124 && flapL.position(rotationUnits::deg) <= 124) {
+                vex::task failsafe1(failsafe);
+                flapR.spinFor(vex::reverse, -180, vex::rotationUnits::deg);
                 flapR.stop(vex::brakeType::brake);
                 //Brain.Screen.print("this");
             } else {
                 vex::task failsafe1(failsafe);
-                flapR.spinFor(vex::reverse, 170, vex::rotationUnits::deg);
-                flapL.spinFor(vex::reverse, 140, vex::rotationUnits::deg);
+                flapR.spinFor(vex::reverse, 180, vex::rotationUnits::deg);
 
             }
         } else if (i == 1) {  // Use the equality operator ==
@@ -63,7 +84,7 @@ int flaps() {
 }
 
 int failsafe(){
-  wait(3, vex::timeUnits::sec);
+  wait(2, vex::timeUnits::sec);
   flapL.stop(vex::brakeType::brake);
   flapR.stop(vex::brakeType::brake);
   return 1;

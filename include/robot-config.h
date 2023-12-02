@@ -12,7 +12,6 @@ extern motor frontL;
 extern motor frontR;
 extern motor middleL;
 extern motor middleR;
-
 extern motor shooter;
 extern motor flapR;
 extern motor flapL;

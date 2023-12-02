@@ -11,7 +11,8 @@
 #include "vex.h"
 using namespace vex;
 
-vex::task flapstaks(flaps);
+vex::task flapstaks(flapLe);
+vex::task flapy(flapRi);
 
 // A global instance of competition
 competition Competition;
@@ -55,6 +56,7 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
+  int autonDis = 1900; 
   while (1){
     if (limitSense.pressing()) {
       shooter.stop(vex::brakeType::brake);
@@ -66,7 +68,7 @@ void autonomous(void) {
 
   setDrive(vex::forward, autonSpeed, autonSpeed);
 
-  wait(1500, msec);
+  wait(autonDis, msec);
 
   brakeDrive(brake);
 
@@ -74,7 +76,7 @@ void autonomous(void) {
 
   setDrive(vex::reverse, autonSpeed, autonSpeed);
 
-  wait(1500, msec);
+  wait(autonDis, msec);
 
   brakeDrive(brake);
 
