@@ -11,7 +11,7 @@
 #include "vex.h"
 using namespace vex;
 
-//vex::task flapstask(flaps);
+vex::task flapstaks(flaps);
 
 // A global instance of competition
 competition Competition;
@@ -93,7 +93,8 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-void usercontrol(void) {
+void usercontrol(void) 
+{
   //define variables used for controlling motors based on controller inputs
   double leftSpeed = 0;
   double rightSpeed = 0;
@@ -165,8 +166,8 @@ void usercontrol(void) {
         shooter.spin(vex::forward, 100, vex::percentUnits::pct);
       }
     else if(Controller1.ButtonY.pressing()){
-      flapL.stop(vex::brakeType::coast);
-      flapR.stop(vex::brakeType::coast);
+      flapL.stop(vex::brakeType::brake);
+      flapR.stop(vex::brakeType::brake);
     }
       else {
         shooter.stop(vex::brakeType::brake);
@@ -178,23 +179,47 @@ void usercontrol(void) {
 
 // start of the flaps
 
+/*
     if(Controller1.ButtonR2.pressing()) 
     {
-      if(flapR.position(rotationUnits::deg) <= 124 && flapL.position(rotationUnits::deg) <= 124){
-        flapL.spin(vex::forward, 12000, voltageUnits::mV);
-        flapR.spin(vex::forward, 12000, voltageUnits::mV);
-        flapR.spinTo(-155, rotationUnits::deg, false);
-        flapL.spinTo(-155, rotationUnits::deg, false);
-        flapL.stop(vex::brakeType::brake);
-        flapR.stop(vex::brakeType::brake);
-        Brain.Screen.print(flapR.position(rotationUnits::deg));
+      if(flapR.position(rotationUnits::deg) <= 124 && flapL.position(rotationUnits::deg) <= 124)
+      {
+        int a = 0;
+        bool flapRight = false;
+        bool flapLeft = false;
+        while(a <= 10 + 1)
+        {
+          if(a < 10){
+            flapRight = flapR.spinTo(-10, rotationUnits::deg, false);
+            flapLeft = flapL.spinTo(-10, rotationUnits::deg, false);
+            //Brain.Screen.print("e, ");
+          }
+          if(a < 10)
+          {
+            flapL.spin(vex::forward, 12000, voltageUnits::mV);
+            flapR.spin(vex::forward, 12000, voltageUnits::mV);
+            //Brain.Screen.print("p, ");
+
+            a++;
+          }
+          else if(a >= 10)
+          {
+            flapL.stop(vex::brakeType::coast);
+            flapR.stop(vex::brakeType::coast);
+            Brain.Screen.print("e, ");
+            a++;
+          }
+          //Brain.Screen.print(flapR.position(rotationUnits::deg));
+        }
       }
 
-        else {
+      else
+      {
         flapR.spinTo(-155, rotationUnits::deg, false);
         flapL.spinTo(-155, rotationUnits::deg, false);
-        }
+      } 
     }
+*/
 
 
 
@@ -202,6 +227,7 @@ void usercontrol(void) {
                     // prevent wasted resources.
   }
 }
+
 
 
 //

@@ -32,32 +32,39 @@ void brakeDrive(brakeType driveBrake) //Declare brake type and stop drive motors
     frontR.stop(driveBrake);
 }
 
-/*
+
 int i = 0;
 
-int flaps(){
-  while(true){
-    bool flaps = false;
-  Brain.Screen.print(flapR.position(rotationUnits::deg));
-  if(Controller1.ButtonR2.pressing()) 
-    {
-      if(flapR.position(rotationUnits::deg) <= 124 && flapL.position(rotationUnits::deg) <= 124){
-        flapR.spinFor(vex::reverse, -155, vex::rotationUnits::deg);
-        flapL.spinFor(vex::reverse, -155, vex::rotationUnits::deg);
-        flapL.stop(vex::brakeType::brake);
-        flapR.stop(vex::brakeType::brake);
-        Brain.Screen.print(flapR.position(rotationUnits::deg));
-      }
+int flaps() {
+    bool flapTriggered = false;  // Renamed to avoid conflicts
 
-        else {
-        flapR.spinFor(vex::reverse, 180, vex::rotationUnits::deg);
-        flapL.spinFor(vex::reverse, 155, vex::rotationUnits::deg);
+    while (!flapTriggered) {  // Introduce a condition to exit the loop
+        //Brain.Screen.print("e");
+
+        if (Controller1.ButtonR2.pressing()) {
+            if (flapR.position(rotationUnits::deg) <= 124 && flapL.position(rotationUnits::deg) <= 124) {
+                vex::task failsafe1(failsafe);
+                flapR.spinFor(vex::reverse, -175, vex::rotationUnits::deg);
+                flapL.spinFor(vex::reverse, -175, vex::rotationUnits::deg);
+                flapL.stop(vex::brakeType::brake);
+                flapR.stop(vex::brakeType::brake);
+                //Brain.Screen.print("this");
+            } else {
+                vex::task failsafe1(failsafe);
+                flapR.spinFor(vex::reverse, 170, vex::rotationUnits::deg);
+                flapL.spinFor(vex::reverse, 140, vex::rotationUnits::deg);
+
+            }
+        } else if (i == 1) {  // Use the equality operator ==
+            return 1;
         }
     }
-    else if(i = 1)
-    {
-      return 1;
-    }
-  } 
+    return 0;  // Add a return statement at the end of the function
 }
-*/
+
+int failsafe(){
+  wait(3, vex::timeUnits::sec);
+  flapL.stop(vex::brakeType::brake);
+  flapR.stop(vex::brakeType::brake);
+  return 1;
+}
