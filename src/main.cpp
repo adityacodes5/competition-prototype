@@ -7,6 +7,9 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
+//vex task 
+vex::task flaps(flaps);
+
 #include "vex.h"
 
 using namespace vex;
@@ -171,21 +174,23 @@ void usercontrol(void) {
     }
 
 // start of the flaps
+/*
     if(Controller1.ButtonR2.pressing()) 
     {
-      if(flapR.position(rotationUnits::deg) <= 85 && flapL.position(rotationUnits::deg) <= 85){
-        flapR.spinFor(vex::reverse, -85, vex::rotationUnits::deg);
-        flapL.spinFor(vex::reverse, -85, vex::rotationUnits::deg);
+      if(flapR.position(rotationUnits::deg) <= 124 && flapL.position(rotationUnits::deg) <= 124){
+        flapR.spinFor(vex::reverse, -155, vex::rotationUnits::deg);
+        flapL.spinFor(vex::reverse, -155, vex::rotationUnits::deg);
         flapL.stop(vex::brakeType::brake);
         flapR.stop(vex::brakeType::brake);
         Brain.Screen.print(flapR.position(rotationUnits::deg));
       }
 
         else {
-        flapR.spinFor(vex::reverse, 85, vex::rotationUnits::deg);
-        flapL.spinFor(vex::reverse, 85, vex::rotationUnits::deg);
+        flapR.spinFor(vex::reverse, 180, vex::rotationUnits::deg);
+        flapL.spinFor(vex::reverse, 155, vex::rotationUnits::deg);
         }
     }
+  */
 
 
 
