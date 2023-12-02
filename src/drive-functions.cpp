@@ -31,8 +31,15 @@ void brakeDrive(brakeType driveBrake) //Declare brake type and stop drive motors
     middleR.stop(driveBrake);
     frontR.stop(driveBrake);
 }
-void flaps(){
-         if(Controller1.ButtonR2.pressing()) 
+
+/*
+int i = 0;
+
+int flaps(){
+  while(true){
+    bool flaps = false;
+  Brain.Screen.print(flapR.position(rotationUnits::deg));
+  if(Controller1.ButtonR2.pressing()) 
     {
       if(flapR.position(rotationUnits::deg) <= 124 && flapL.position(rotationUnits::deg) <= 124){
         flapR.spinFor(vex::reverse, -155, vex::rotationUnits::deg);
@@ -47,5 +54,10 @@ void flaps(){
         flapL.spinFor(vex::reverse, 155, vex::rotationUnits::deg);
         }
     }
-    
+    else if(i = 1)
+    {
+      return 1;
+    }
+  } 
 }
+*/

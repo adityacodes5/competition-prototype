@@ -8,11 +8,10 @@
 /*----------------------------------------------------------------------------*/
 
 //vex task 
-vex::task flaps(flaps);
-
 #include "vex.h"
-
 using namespace vex;
+
+//vex::task flapstask(flaps);
 
 // A global instance of competition
 competition Competition;
@@ -165,6 +164,10 @@ void usercontrol(void) {
         shooter.stop(vex::brakeType::coast);
         shooter.spin(vex::forward, 100, vex::percentUnits::pct);
       }
+    else if(Controller1.ButtonY.pressing()){
+      flapL.stop(vex::brakeType::coast);
+      flapR.stop(vex::brakeType::coast);
+    }
       else {
         shooter.stop(vex::brakeType::brake);
       }
@@ -174,23 +177,24 @@ void usercontrol(void) {
     }
 
 // start of the flaps
-/*
+
     if(Controller1.ButtonR2.pressing()) 
     {
       if(flapR.position(rotationUnits::deg) <= 124 && flapL.position(rotationUnits::deg) <= 124){
-        flapR.spinFor(vex::reverse, -155, vex::rotationUnits::deg);
-        flapL.spinFor(vex::reverse, -155, vex::rotationUnits::deg);
+        flapL.spin(vex::forward, 12000, voltageUnits::mV);
+        flapR.spin(vex::forward, 12000, voltageUnits::mV);
+        flapR.spinTo(-155, rotationUnits::deg, false);
+        flapL.spinTo(-155, rotationUnits::deg, false);
         flapL.stop(vex::brakeType::brake);
         flapR.stop(vex::brakeType::brake);
         Brain.Screen.print(flapR.position(rotationUnits::deg));
       }
 
         else {
-        flapR.spinFor(vex::reverse, 180, vex::rotationUnits::deg);
-        flapL.spinFor(vex::reverse, 155, vex::rotationUnits::deg);
+        flapR.spinTo(-155, rotationUnits::deg, false);
+        flapL.spinTo(-155, rotationUnits::deg, false);
         }
     }
-  */
 
 
 
