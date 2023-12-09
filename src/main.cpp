@@ -13,6 +13,7 @@ using namespace vex;
 
 vex::task flapstaks(flapLe);
 vex::task flapy(flapRi);
+vex::task shooter1(shooter_function);
 
 // A global instance of competition
 competition Competition;
@@ -150,11 +151,6 @@ void usercontrol(void)
       brakeDrive(coast);
       setDrive(vex::forward, leftSpeed, rightSpeed);
     }
-    //if(Controller1.ButtonR2.pressing()){
-     //wingR.startSpinTo(vex::reverse, -90, vex::rotationUnits::deg);
-    //}
-    //**CODE FOR FLAPS. TO BE TESTED. DO NOT CHANGE**
-    // ........................................................................
     if(Controller1.ButtonL1.pressing() && !(limitSense.pressing())) { //if the button is pressed and the limit switch is not pressed
       shooter.spin(vex::forward, 100, vex::percentUnits::pct); //charge the catapault up to shoot
       }
@@ -178,51 +174,6 @@ void usercontrol(void)
     else {
       shooter.stop(vex::brakeType::brake);
     }
-
-// start of the flaps
-
-/*
-    if(Controller1.ButtonR2.pressing()) 
-    {
-      if(flapR.position(rotationUnits::deg) <= 124 && flapL.position(rotationUnits::deg) <= 124)
-      {
-        int a = 0;
-        bool flapRight = false;
-        bool flapLeft = false;
-        while(a <= 10 + 1)
-        {
-          if(a < 10){
-            flapRight = flapR.spinTo(-10, rotationUnits::deg, false);
-            flapLeft = flapL.spinTo(-10, rotationUnits::deg, false);
-            //Brain.Screen.print("e, ");
-          }
-          if(a < 10)
-          {
-            flapL.spin(vex::forward, 12000, voltageUnits::mV);
-            flapR.spin(vex::forward, 12000, voltageUnits::mV);
-            //Brain.Screen.print("p, ");
-
-            a++;
-          }
-          else if(a >= 10)
-          {
-            flapL.stop(vex::brakeType::coast);
-            flapR.stop(vex::brakeType::coast);
-            Brain.Screen.print("e, ");
-            a++;
-          }
-          //Brain.Screen.print(flapR.position(rotationUnits::deg));
-        }
-      }
-
-      else
-      {
-        flapR.spinTo(-155, rotationUnits::deg, false);
-        flapL.spinTo(-155, rotationUnits::deg, false);
-      } 
-    }
-*/
-
 
 
     wait(20, msec); // Sleep the task for a short amount of time to

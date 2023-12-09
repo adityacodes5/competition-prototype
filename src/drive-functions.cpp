@@ -76,11 +76,37 @@ int flapRi() {
                 flapR.spinFor(vex::reverse, 180, vex::rotationUnits::deg);
 
             }
-        } else if (i == 1) {  // Use the equality operator ==
+        } else if (i == 1) { 
             return 1;
         }
     }
-    return 0;  // Add a return statement at the end of the function
+    return 0; 
+}
+
+int shooter_function() {
+  static bool startShooting = false;
+
+  while (true) {
+    if (Controller1.ButtonB.pressing()) {
+      startShooting = !startShooting;
+
+      if (startShooting) {
+        Brain.Screen.print("Start");
+        shooter.spin(vex::forward, 100, vex::percentUnits::pct);
+      } else {
+        Brain.Screen.print("Stop");
+        shooter.stop(vex::brakeType::coast);
+      }
+
+      while (Controller1.ButtonB.pressing()) {
+        // Wait for the button release to avoid unintended multiple toggles
+      }
+    }
+
+    // Other logic or conditions can be added here
+  }
+
+  return 0;  // This line is unreachable because of the infinite loop
 }
 
 int failsafe(){

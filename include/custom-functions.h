@@ -4,3 +4,4 @@ extern void setDrive(directionType direction, double leftDriveSpeed, double righ
 extern int flapLe();
 extern int failsafe();
 extern int flapRi();
+extern int shooter_function();
